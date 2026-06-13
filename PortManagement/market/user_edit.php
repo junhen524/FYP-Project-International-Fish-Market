@@ -1,0 +1,151 @@
+<?php
+require_once __DIR__ . '/../helpers/functions.php';
+$user = requireLogin();
+list($roleDisplay, $rawRole, $userPort) = getRoleDisplay($user);
+$displayName = $user['username'] ?? $user['email'] ?? 'User';
+
+$id = (int)($_GET['id'] ?? 0);
+if (!$id) { redirect('/dashboard/analytics/market/users/'); exit; }
+
+$targetUser = null;
+try { $targetUser = dbGetRow("SELECT id, username, email, full_name, phone, account_status FROM market_user WHERE id = ?", [$id]); } catch (Exception $e) {}
+if (!$targetUser) {
+    redirect('/dashboard/analytics/market/users/');
+    exit;
+}
+
+$message = ''; $error = '';
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $full_name = $_POST['full_name'] ?? '';
+    $email = $_POST['email'] ?? '';
+    $phone = $_POST['phone'] ?? '';
+    $account_status = $_POST['account_status'] ?? 'active';
+    if ($full_name && $email) {
+        try {
+            dbExecute("UPDATE market_user SET full_name = ?, email = ?, phone = ?, account_status = ? WHERE id = ?",
+                [$full_name, $email, $phone, $account_status, $id]);
+            $message = 'User updated successfully.';
+            $targetUser = dbGetRow("SELECT id, username, email, full_name, phone, account_status FROM market_user WHERE id = ?", [$id]);
+        } catch (Exception $e) { $error = 'Error: ' . $e->getMessage(); }
+    } else { $error = 'Name and email are required.'; }
+}
+
+$title = 'Edit Market User';
+$extra_head = '';
+require __DIR__ . '/../helpers/header.php';
+?>
+<style>
+.edit-card{width:100%;max-width:820px;margin:0 auto;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:20px;backdrop-filter:blur(25px);-webkit-backdrop-filter:blur(25px);box-shadow:0 30px 60px rgba(0,0,0,0.4);display:flex;overflow:hidden}
+.edit-sidebar{width:30%;background:rgba(0,0,0,0.15);border-right:1px solid rgba(255,255,255,0.08);padding:40px 20px;box-sizing:border-box;display:flex;flex-direction:column;align-items:center;text-align:center}
+
+.edit-sidebar h3{margin:0;font-size:1.2rem;font-weight:700;color:#fff}
+.edit-sidebar .sidebar-email{font-size:.8rem;color:#b0bec5;margin:5px 0 25px}
+.status-pill{display:inline-flex;align-items:center;gap:6px;background:rgba(0,230,118,0.08);border:1px solid #00e676;color:#00e676;padding:6px 14px;border-radius:20px;font-size:.8rem;font-weight:600;text-shadow:0 0 10px rgba(0,230,118,0.3)}
+.status-dot{width:8px;height:8px;background:#00e676;border-radius:50%;box-shadow:0 0 8px #00e676}
+.edit-form{width:70%;padding:35px 30px;box-sizing:border-box;display:flex;flex-direction:column;justify-content:space-between}
+.form-section-title{font-size:.8rem;color:#00e5ff;text-transform:uppercase;letter-spacing:1px;margin:0 0 15px 0;border-bottom:1px solid rgba(255,255,255,0.05);padding-bottom:6px}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:15px 20px;margin-bottom:25px}
+.form-group{display:flex;flex-direction:column;gap:6px}
+.form-group label{font-size:.75rem;color:#b0bec5;text-transform:uppercase;letter-spacing:.5px}
+.form-input,.form-select{width:100%;background:rgba(0,0,0,0.25);border:1px solid rgba(255,255,255,0.08);border-radius:8px;padding:9px 12px;box-sizing:border-box;color:#fff;font-size:.9rem;transition:border-color .3s,box-shadow .3s}
+.form-input:disabled{background:rgba(0,0,0,0.4);color:#b0bec5;border-color:rgba(255,255,255,0.03);cursor:not-allowed}
+.form-select{appearance:none;background-image:url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23b0bec5' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:30px}
+.form-input:focus,.form-select:focus{outline:none;border-color:#00e5ff;box-shadow:0 0 10px rgba(0,229,255,0.2)}
+.action-buttons{display:flex;justify-content:flex-end;gap:12px;border-top:1px solid rgba(255,255,255,0.05);padding-top:20px}
+.btn-cancel{background:transparent;border:1px solid rgba(255,255,255,0.08);color:#b0bec5;padding:8px 20px;border-radius:8px;cursor:pointer;font-size:.85rem;font-weight:600;transition:background .2s,color .2s}
+.btn-cancel:hover{background:rgba(255,255,255,0.05);color:#fff;border-color:rgba(255,255,255,0.2)}
+.btn-save{background:linear-gradient(135deg,#00e5ff,#0288d1);border:none;color:#fff;padding:8px 24px;border-radius:8px;cursor:pointer;font-size:.85rem;font-weight:700;box-shadow:0 4px 15px rgba(2,136,209,0.2);transition:transform .2s,box-shadow .2s}
+.btn-save:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(0,229,255,0.35)}
+@media(max-width:768px){.edit-card{flex-direction:column}.edit-sidebar{width:100%;border-right:none;border-bottom:1px solid rgba(255,255,255,0.08)}.edit-form{width:100%}.form-grid{grid-template-columns:1fr}}
+</style>
+<div class="dash-layout">
+  <nav class="dash-sidebar">
+    <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted);padding:8px 14px 10px;">🐟 Market</div>
+    <a class="dash-sidebar-item" href="/dashboard/analytics/market/">📊 Dashboard</a>
+    <a class="dash-sidebar-item" href="/dashboard/analytics/market/orders/">📋 Orders</a>
+    <a class="dash-sidebar-item active" href="/dashboard/analytics/market/users/">👥 Users</a>
+    <a class="dash-sidebar-item" href="/dashboard/analytics/market/topup/">💰 Top-Up</a>
+    <a class="dash-sidebar-item" href="/logistics/">🚚 Order Fulfillment</a>
+    <a class="dash-sidebar-item" href="/logistics/warehouse/">📦 Warehouse</a>
+    <a class="dash-sidebar-item" href="/logistics/drivers/">👤 Drivers</a>
+  </nav>
+
+  <div class="dash-content">
+    <?php if ($message): ?><div style="max-width:820px;margin:0 auto 16px;padding:12px 16px;background:rgba(52,211,153,0.10);border:1px solid rgba(52,211,153,0.35);border-radius:10px;color:#34d399;font-size:.85rem;"><?= e($message) ?></div><?php endif; ?>
+    <?php if ($error): ?><div style="max-width:820px;margin:0 auto 16px;padding:12px 16px;background:rgba(251,113,133,0.10);border:1px solid rgba(251,113,133,0.35);border-radius:10px;color:#fb7185;font-size:.85rem;"><?= e($error) ?></div><?php endif; ?>
+
+    <form method="post" style="max-width:820px;margin:0 auto;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+        <div>
+          <h2 style="margin:0;font-size:1.3rem;">✏️ Edit Market User</h2>
+          <p class="subtle" style="margin:4px 0 0;">Domestic / Local Users</p>
+        </div>
+        <a href="/dashboard/analytics/market/users/" class="btn btn-ghost" style="padding:8px 16px;">← Back to Users</a>
+      </div>
+
+      <div class="edit-card">
+        <div class="edit-sidebar">
+          <div class="avatar-upload">
+            <div class="avatar-preview">👤</div>
+            <input type="file" accept="image/jpeg,image/png,image/webp" onchange="previewAvatar(this)">
+          </div>
+          <h3><?= e($targetUser['full_name'] ?? $targetUser['username'] ?? 'User') ?></h3>
+          <p class="sidebar-email"><?= e($targetUser['email'] ?? '') ?></p>
+          <div class="status-pill">
+            <span class="status-dot"></span>
+            <?= ucfirst($targetUser['account_status'] ?? 'active') ?> User
+          </div>
+        </div>
+
+        <div class="edit-form">
+          <div>
+            <div class="form-section-title">Personal Info</div>
+            <div class="form-grid">
+              <div class="form-group">
+                <label>Username</label>
+                <input type="text" class="form-input" value="<?= e($targetUser['username'] ?? '') ?>" disabled>
+              </div>
+              <div class="form-group">
+                <label for="full_name">Full Name</label>
+                <input type="text" id="full_name" name="full_name" class="form-input" value="<?= e($targetUser['full_name'] ?? '') ?>" required>
+              </div>
+              <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" class="form-input" value="<?= e($targetUser['email'] ?? '') ?>" required>
+              </div>
+              <div class="form-group">
+                <label for="phone">Phone</label>
+                <input type="text" id="phone" name="phone" class="form-input" value="<?= e($targetUser['phone'] ?? '') ?>">
+              </div>
+            </div>
+
+            <div class="form-section-title">Management & Security</div>
+            <div class="form-grid">
+              <div class="form-group">
+                <label for="account_status">Account Status</label>
+                <select id="account_status" name="account_status" class="form-select">
+                  <option value="active" <?= ($targetUser['account_status'] ?? '') === 'active' ? 'selected' : '' ?>>Active</option>
+                  <option value="inactive" <?= ($targetUser['account_status'] ?? '') === 'inactive' ? 'selected' : '' ?>>Inactive</option>
+                  <option value="suspended" <?= ($targetUser['account_status'] ?? '') === 'suspended' ? 'selected' : '' ?>>Suspended</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>User Role</label>
+                <select class="form-select" disabled>
+                  <option selected>Regular User</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="action-buttons">
+            <a href="/dashboard/analytics/market/users/" class="btn-cancel">Cancel</a>
+            <button type="submit" class="btn-save">Save Changes</button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<?php require __DIR__ . '/../helpers/footer.php'; ?>

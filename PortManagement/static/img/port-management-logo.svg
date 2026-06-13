@@ -1,0 +1,22 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" role="img" aria-label="Port Management System logo">
+  <defs>
+    <linearGradient id="pm-bg" x1="14" y1="12" x2="82" y2="84" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#2dd4bf"/>
+      <stop offset="1" stop-color="#60a5fa"/>
+    </linearGradient>
+    <linearGradient id="pm-accent" x1="23" y1="63" x2="73" y2="63" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#5eead4"/>
+      <stop offset="1" stop-color="#93c5fd"/>
+    </linearGradient>
+  </defs>
+  <rect x="8" y="8" width="80" height="80" rx="22" fill="url(#pm-bg)"/>
+  <path d="M24 66c8 6 18 8 29 6 7-1 13-4 19-8v6c-6 7-15 11-26 11-9 0-17-3-22-8v-7Z" fill="#082033" opacity=".92"/>
+  <path d="M26 58h38l8 8H20l6-8Z" fill="#f8fafc"/>
+  <path d="M33 47h24l7 11H27l6-11Z" fill="#0f1a2e"/>
+  <path d="M39 38h13v9H39v-9Z" fill="#fbbf24"/>
+  <path d="M28 36h42" stroke="#082033" stroke-width="5" stroke-linecap="round"/>
+  <path d="M56 36 68 24" stroke="#082033" stroke-width="5" stroke-linecap="round"/>
+  <path d="M68 24v19" stroke="#082033" stroke-width="5" stroke-linecap="round"/>
+  <path d="M68 43h8" stroke="#082033" stroke-width="5" stroke-linecap="round"/>
+  <path d="M22 76c7-4 13-4 20 0s13 4 20 0 10-4 14-2" fill="none" stroke="url(#pm-accent)" stroke-width="4" stroke-linecap="round"/>
+</svg>
