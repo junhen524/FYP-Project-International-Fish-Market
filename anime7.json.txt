@@ -1,17 +1,1 @@
-{
-    "api": "4",
-    "type": "anime",
-    "name": "Anime7",
-    "version": "1.0",
-    "muliSources": true,
-    "useWebview": true,
-    "useNativePlayer": true,
-    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36",
-    "baseURL": "https://anime7.top/",
-    "searchURL": "https://anime7.top/vod-search/wd/@keyword/",
-    "searchList": "//*[contains(@class,'hl-list-item')]",
-    "searchName": ".//a[1]//text()",
-    "searchResult": ".//a[1]",
-    "chapterRoads": "//ul[contains(@class,'hl-plays-list')]",
-    "chapterResult": ".//a"
-}
+kazumi://eyJhcGkiOiI0IiwidHlwZSI6ImFuaW1lIiwibmFtZSI6IkFuaW1lNyDliqjnlLvnur/kuIrnnIsiLCJ2ZXJzaW9uIjoiMS4xIiwibXVsaVNvdXJjZXMiOnRydWUsInVzZUdlYnZpZXciOnRydWUsInVzZU5hdGl2ZVBsYXllciI6dHJ1ZSwidXNlUG9zdCI6ZmFsc2UsInVzZUxlZ2FjeVBhcnNlciI6ZmFsc2UsImFkQmxvY2tlciI6ZmFsc2UsInVzZXJBZ2VudCI6IiIsImJhc2VVUkwiOiJodHRwczovL2FuaW1lNy50b3AvIiwic2VhcmNoVVJMIjoiaHR0cHM6Ly9hbmltZTcudG9wL3ZvZC1zZWFyY2gvd2QvQGtleXdvcmQvIiwic2VhcmNoTGlzdCI6Ii8vZGl2WzJdL2Rpdi9kaXZbMl0vZGl2L2RpdlsyXS9kaXZbMV0vZGl2WzJdL2Rpdi91bC8vbGkiLCJzZWFyY2hOYW1lIjoiLy9kaXYvZGl2WzJdL2RpdlsyXS9kaXZbMV0vYSIsInNlYXJjaFJlc3VsdCI6Ii8vZGl2L2RpdlsyXS9kaXZbMl0vYSIsImNoYXB0ZXJSb2FkcyI6Ii91bFtAaWQ9J2hsLXBsYXlzLWxpc3QnXSIsImNoYXB0ZXJSZXN1bHQiOiIvL2xpL2EiLCJyZWZlcmVyIjoiaHR0cHM6Ly9hbmltZTcudG9wLyIsInNlYXJjaE1vZGUiOiJ4cGF0aCIsImNoYXB0ZXJNb2RlIjoieHBhdGgiLCJhbnRpQ3Jhd2xlckNvbmZpZyI6eyJlbmFibGVkIjpmYWxzZSwiY2FwdGNoYVR5cGUiOjEsImNhcHRjaGFBZ2UiOiIiLCJjYXB0Y2hhSW1hZ2UiOiIiLCJjYXB0Y2hhSW5wdXQiOiIiLCJjYXB0Y2hhQnV0dG9uIjoiIiwiY2FwdGNoYURldGVjdFR5cGUiOjEsImNhcHRjaGFEZXRlY3RWYWx1ZSI6IiIsImNhcHRjaGFTY3JpcHQiOiIifX0=kazumi://eyJhcGkiOiI0IiwidHlwZSI6ImFuaW1lIiwibmFtZSI6IkFuaW1lNyDliqjnlLvnur/kuIrnnIsiLCJ2ZXJzaW9uIjoiMS4xIiwibXVsaVNvdXJjZXMiOnRydWUsInVzZUdlYnZpZXciOnRydWUsInVzZU5hdGl2ZVBsYXllciI6dHJ1ZSwidXNlUG9zdCI6ZmFsc2UsInVzZUxlZ2FjeVBhcnNlciI6ZmFsc2UsImFkQmxvY2tlciI6ZmFsc2UsInVzZXJBZ2VudCI6IiIsImJhc2VVUkwiOiJodHRwczovL2FuaW1lNy50b3AvIiwic2VhcmNoVVJMIjoiaHR0cHM6Ly9hbmltZTcudG9wL3ZvZC1zZWFyY2gvd2QvQGtleXdvcmQvIiwic2VhcmNoTGlzdCI6Ii8vZGl2WzJdL2Rpdi9kaXZbMl0vZGl2L2RpdlsyXS9kaXZbMV0vZGl2WzJdL2Rpdi91bC8vbGkiLCJzZWFyY2hOYW1lIjoiLy9kaXYvZGl2WzJdL2RpdlsyXS9kaXZbMV0vYSIsInNlYXJjaFJlc3VsdCI6Ii8vZGl2L2RpdlsyXS9kaXZbMl0vYSIsImNoYXB0ZXJSb2FkcyI6Ii91bFtAaWQ9J2hsLXBsYXlzLWxpc3QnXSIsImNoYXB0ZXJSZXN1bHQiOiIvL2xpL2EiLCJyZWZlcmVyIjoiaHR0cHM6Ly9hbmltZTcudG9wLyIsInNlYXJjaE1vZGUiOiJ4cGF0aCIsImNoYXB0ZXJNb2RlIjoieHBhdGgiLCJhbnRpQ3Jhd2xlckNvbmZpZyI6eyJlbmFibGVkIjpmYWxzZSwiY2FwdGNoYVR5cGUiOjEsImNhcHRjaGFBZ2UiOiIiLCJjYXB0Y2hhSW1hZ2UiOiIiLCJjYXB0Y2hhSW5wdXQiOiIiLCJjYXB0Y2hhQnV0dG9uIjoiIiwiY2FwdGNoYURldGVjdFR5cGUiOjEsImNhcHRjaGFEZXRlY3RWYWx1ZSI6IiIsImNhcHRjaGFTY3JpcHQiOiIifX0=
