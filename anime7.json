@@ -1,0 +1,33 @@
+{
+  "api": "4",
+  "type": "anime",
+  "name": "Anime7 动画线上看",
+  "version": "1.6",
+  "muliSources": true,
+  "useWebview": true,
+  "useNativePlayer": true,
+  "usePost": false,
+  "useLegacyParser": false,
+  "adBlocker": false,
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36",
+  "baseURL": "https://anime7.top/",
+  "searchURL": "https://anime7.top/vod-search/?wd=@keyword&submit=",
+  "searchList": "//li[@class='hl-list-item']",
+  "searchName": "//a[2]",
+  "searchResult": "//a[2]",
+  "chapterRoads": "//div[@class*='playlist']//ul",
+  "chapterResult": "//li/a",
+  "referer": "https://anime7.top/",
+  "searchMode": "xpath",
+  "chapterMode": "xpath",
+  "antiCrawlerConfig": {
+    "enabled": false,
+    "captchaType": 1,
+    "captchaImage": "",
+    "captchaInput": "",
+    "captchaButton": "",
+    "captchaDetectType": 1,
+    "captchaDetectValue": "",
+    "captchaScript": ""
+  }
+}
