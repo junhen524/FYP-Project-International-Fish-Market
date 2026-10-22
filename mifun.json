@@ -1,0 +1,18 @@
+{
+  "api": "4",
+  "type": "anime",
+  "name": "MiFun",
+  "version": "1.0",
+  "muliSources": true,
+  "useWebview": true,
+  "useNativePlayer": true,
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+  "baseURL": "https://ios.mifun.org/",
+  "searchURL": "https://ios.mifun.org/vodsearch/?wd=@keyword&submit=",
+  "searchList": "//*[@class*='hl-list-item']",
+  "searchName": "//a[2]",
+  "searchResult": "//a[2]",
+  "chapterRoads": "//ul[@class*='hl-plays-list']",
+  "chapterResult": "//li/a",
+  "referer": "https://ios.mifun.org/"
+}
