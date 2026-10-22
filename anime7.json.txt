@@ -1,0 +1,17 @@
+{
+    "api": "4",
+    "type": "anime",
+    "name": "Anime7",
+    "version": "1.0",
+    "muliSources": true,
+    "useWebview": true,
+    "useNativePlayer": true,
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36",
+    "baseURL": "https://anime7.top/",
+    "searchURL": "https://anime7.top/vod-search/wd/@keyword/",
+    "searchList": "//*[contains(@class,'hl-list-item')]",
+    "searchName": ".//a[1]//text()",
+    "searchResult": ".//a[1]",
+    "chapterRoads": "//ul[contains(@class,'hl-plays-list')]",
+    "chapterResult": ".//a"
+}
