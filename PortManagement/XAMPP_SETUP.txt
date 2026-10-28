@@ -1,0 +1,94 @@
+========================================
+  XAMPP 部署说明 - Port Management PHP
+========================================
+
+【方式一】使用 VirtualHost（推荐）
+──────────────────────────────
+
+1. 打开 XAMPP 配置
+   用记事本打开: C:\xampp\apache\conf\extra\httpd-vhosts.conf
+
+2. 在文件末尾添加：
+   <VirtualHost *:80>
+       DocumentRoot "C:\Users\Ken\Desktop\FisherySystem\PortManagement\php_version"
+       ServerName port.local
+       <Directory "C:\Users\Ken\Desktop\FisherySystem\PortManagement\php_version">
+           Options Indexes FollowSymLinks
+           AllowOverride All
+           Require all granted
+       </Directory>
+   </VirtualHost>
+
+3. 打开 C:\Windows\System32\drivers\etc\hosts（管理员权限），添加：
+   127.0.0.1  port.local
+
+4. 启用 Apache 模块：
+   - 打开 XAMPP Control Panel
+   - Apache -> Config -> php.ini，确保以下两行没有分号注释：
+     extension=pdo_pgsql
+     extension=pgsql
+   - Apache -> Config -> httpd.conf，确保以下两行没有分号注释：
+     LoadModule rewrite_module modules/mod_rewrite.so
+     Include conf/extra/httpd-vhosts.conf
+
+5. 重启 Apache，访问：http://port.local
+
+
+【方式二】直接复制到 htdocs 根目录
+──────────────────────────────
+
+1. 复制 php_version 文件夹内所有内容
+   到: C:\xampp\htdocs\
+
+2. 启用 Apache rewrite 模块：
+   - XAMPP Control Panel -> Apache -> Config -> httpd.conf
+   - 找到 #LoadModule rewrite_module modules/mod_rewrite.so
+   - 去掉前面的 # 号
+   - 保存
+
+3. 开启 PHP PostgreSQL 扩展：
+   - XAMPP Control Panel -> Apache -> Config -> php.ini
+   - 找到 ;extension=pdo_pgsql 和 ;extension=pgsql
+   - 去掉前面的分号
+   - 保存
+
+4. 重启 Apache
+
+5. 访问：http://localhost/
+
+注意：方式二会覆盖 htdocs 根目录，如有其他网站请先备份。
+
+
+【方式三】使用 PHP 内置服务器（开发用，最简单）
+──────────────────────────────
+
+1. 打开终端（CMD 或 PowerShell）
+2. 执行：
+   cd C:\Users\Ken\Desktop\FisherySystem\PortManagement\php_version
+   php -S localhost:8000
+3. 访问：http://localhost:8000
+
+
+【静态文件说明】
+────────────────
+PHP 项目共享 Django 项目的 static/ 文件夹。
+路径：PortManagement\static\
+包含 CSS 和产品图片，已通过 index.php 路由到 /static/ 访问。
+
+
+【问题排查】
+────────────────
+1. 如果出现 "Class not found" 错误：
+   → 检查 PHP 版本是否 >= 7.4
+
+2. 如果出现 "Call to undefined function pg_connect"：
+   → 检查 php.ini 中 pdo_pgsql 扩展已启用
+
+3. 如果出现 404：
+   → 检查 .htaccess 是否生效（AllowOverride All）
+   → 检查 mod_rewrite 是否启用
+
+4. 登录问题：
+   → Django 的密码是 pbkdf2_sha256 加密
+   → PHP 默认用 bcrypt（password_hash）
+   → 如需兼容 Django 密码，请联系管理员重建密码

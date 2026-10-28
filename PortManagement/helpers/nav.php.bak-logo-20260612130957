@@ -1,0 +1,26 @@
+<?php
+$navDisplayName = $displayName ?? $user['username'] ?? $user['email'] ?? 'User';
+$navRole = $roleDisplay ?? $role ?? 'User';
+$navPort = $userPort ?? '';
+?>
+    <header class="nav">
+      <div class="nav-inner">
+        <a href="/" class="brand"><div class="brand-badge"></div><span>Port Management System</span></a>
+        <div class="nav-right">
+          <div class="pill nav-clock-pill" style="display:inline-flex;flex-direction:row;align-items:center;gap:4px;padding:8px 12px;font-size:12px;font-weight:600;white-space:nowrap;"><span>🕐</span><span style="color:var(--muted);"> </span><span id="clockDate"></span><span style="color:var(--muted);margin:0 2px;"> | </span><span id="clockTime"></span><span style="color:var(--muted);"> </span></div>
+          <?php if ($navRole === 'Super Admin' || $navRole === 'Port Admin'): ?>
+          <div class="nav-dash-links" style="display:flex;align-items:center;gap:2px;">
+            <a href="/dashboard/analytics/unified/" class="btn btn-ghost" style="padding:6px 12px;font-size:12px;font-weight:700;">📊 Unified</a>
+            <a href="/dashboard/analytics/market/" class="btn btn-ghost" style="padding:6px 12px;font-size:12px;font-weight:700;">🐟 Market</a>
+            <a href="/dashboard/analytics/international/" class="btn btn-ghost" style="padding:6px 12px;font-size:12px;font-weight:700;">🌍 International</a>
+            <a href="/vessels/" class="btn btn-ghost" style="padding:6px 12px;font-size:12px;font-weight:700;">🚢 Vessels</a>
+            <a href="/dashboard/stock/" class="btn btn-ghost" style="padding:6px 12px;font-size:12px;font-weight:700;">🏭 Warehouse</a>
+          </div>
+          <?php endif; ?>
+          <div style="display:flex;flex-direction:column;align-items:stretch;gap:2px;">
+            <div class="pill" style="display:flex;align-items:center;gap:4px;padding:4px 12px;"><span style="font-size:11px;font-weight:700;color:#fbbf24;"><?= e($navDisplayName) ?></span></div>
+            <a href="/logout/" class="btn btn-ghost" style="padding:3px 12px;font-size:11px;text-align:center;">Logout</a>
+          </div>
+        </div>
+      </div>
+    </header>
